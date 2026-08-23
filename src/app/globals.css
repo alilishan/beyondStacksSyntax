@@ -144,7 +144,8 @@
     --color-input: var(--input);
     --color-ring: var(--ring);
 
-    --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* fallbacks are declared on the font itself in layout.tsx */
+    --font-mono: var(--font-jetbrains-mono);
     --font-reading: var(--font-plex-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --font-sans: var(--font-reading);
 
