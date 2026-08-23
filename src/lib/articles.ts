@@ -121,7 +121,9 @@ function readAll(): Article[] {
         .filter((file) => /\.mdx?$/.test(file))
         .map(parseArticle)
         .filter((article) => !article.draft || process.env.NODE_ENV === "development")
-        .sort((a, b) => b.date.localeCompare(a.date));
+        // Newest first. Same-day posts fall back to slug so the order is
+        // stable across builds rather than depending on readdir order.
+        .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 }
 
 /**

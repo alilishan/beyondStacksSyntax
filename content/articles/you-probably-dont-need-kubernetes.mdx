@@ -1,0 +1,422 @@
+---
+title: "You Probably Don't Need Kubernetes"
+description: "Why good architecture is about choosing enough infrastructure — not the most infrastructure."
+category: infrastructure
+series: keep-it-simple
+date: 2026-08-23
+featured: true
+tags:
+  - Kubernetes
+  - Docker
+  - Infrastructure
+  - Architecture
+  - Trade-offs
+---
+
+There was a time when seeing Kubernetes in an architecture diagram immediately made a system look serious.
+
+Clusters. Pods. Services. Ingress controllers. Auto-scaling. Self-healing workloads.
+
+It looked like what modern infrastructure was supposed to look like.
+
+After spending years building, deploying, breaking, fixing, scaling, and maintaining production systems, my view has changed quite a bit.
+
+These days, when someone suggests Kubernetes for a new system, my first question isn't *how do we implement it?*
+
+It's: **what problem are we solving with it?**
+
+And surprisingly often, the answer is not very convincing.
+
+This isn't an argument against Kubernetes. Kubernetes is an incredibly capable platform, and there are environments where I wouldn't hesitate to use it.
+
+But many systems simply don't need it.
+
+Sometimes a few Docker containers, a reverse proxy, sensible monitoring, automated deployments, and good backups are exactly enough.
+
+And **exactly enough** is something I've learned to appreciate much more over the years.
+
+## We Have a Habit of Designing for Tomorrow
+
+Software engineers like solving difficult problems.
+
+Unfortunately, that sometimes means we also like solving problems that don't exist yet.
+
+A new application starts with a web frontend, an API, a database, perhaps a background worker and a few supporting services.
+
+But before long, the architecture discussion starts.
+
+*"What happens when we have millions of users?"*
+
+*"What if we need to scale this across multiple regions?"*
+
+*"Shouldn't every service scale independently?"*
+
+*"Maybe we should put everything on Kubernetes from the beginning."*
+
+These are valid questions.
+
+But there is another question that should come first: **what does the system actually need today?**
+
+There is nothing wrong with designing for growth. In fact, we should.
+
+But designing something that **can evolve** is very different from implementing every piece of infrastructure we might eventually need.
+
+## Docker Already Gets You Quite Far
+
+Consider a fairly typical business application. You might have a web application, an API, a background worker, an authentication service, a reporting service and a database.
+
+There is nothing particularly unusual about this architecture.
+
+Containerising those applications might give us something like this.
+
+```text title="A typical containerised deployment"
+                    Internet
+                        │
+                        ▼
+                ┌───────────────┐
+                │ Reverse Proxy │
+                │ Nginx/Traefik │
+                └───────┬───────┘
+                        │
+        ┌───────────────┼────────────────┐
+        │               │                │
+        ▼               ▼                ▼
+   ┌─────────┐      ┌─────────┐     ┌─────────┐
+   │   Web   │      │   API   │     │  Auth   │
+   │Container│      │Container│     │Container│
+   └─────────┘      └────┬────┘     └─────────┘
+                         │
+                  ┌──────┴───────┐
+                  │              │
+                  ▼              ▼
+             ┌─────────┐    ┌─────────┐
+             │ Worker  │    │Reporting│
+             │Container│    │Container│
+             └─────────┘    └─────────┘
+                         │
+                         ▼
+                    ┌─────────┐
+                    │Database │
+                    └─────────┘
+```
+
+Add Docker Compose, CI/CD, health checks, proper logging, monitoring, backups and a sensible deployment process, and you already have a capable production environment.
+
+For a surprising number of systems, this is enough.
+
+Maybe you eventually add another host. Maybe the database moves to a managed service. Maybe certain workloads are separated onto dedicated machines.
+
+The architecture can evolve.
+
+You don't necessarily need an orchestration platform on day one to make that possible.
+
+## Then Kubernetes Enters the Room
+
+Kubernetes solves real problems. It gives us mechanisms for workload orchestration, service discovery, automated scheduling, rolling deployments, horizontal scaling, workload recovery, configuration and secret management, and distributing workloads across multiple nodes.
+
+Those are useful capabilities.
+
+But they aren't free.
+
+Your conceptual architecture suddenly becomes something closer to this.
+
+```text title="What sits between your application and the metal"
+Application
+    │
+    ▼
+Container
+    │
+    ▼
+Pod
+    │
+    ▼
+Deployment
+    │
+    ▼
+Service
+    │
+    ▼
+Ingress
+    │
+    ▼
+Cluster Networking
+    │
+    ▼
+Node
+    │
+    ▼
+Infrastructure
+```
+
+And that's still a very simplified picture.
+
+Soon you may also be dealing with namespaces, ConfigMaps, secrets, persistent volumes, storage classes, ingress controllers, Helm charts, autoscalers, network policies, operators, monitoring, log aggregation, cluster upgrades and certificate management.
+
+Again, none of these are bad things.
+
+The problem is that **every abstraction you introduce becomes another abstraction somebody needs to understand when something goes wrong.**
+
+And eventually, something always goes wrong.
+
+## The Cost Nobody Puts on the Architecture Diagram
+
+Infrastructure cost is easy to see. You can look at a cloud invoice and calculate it.
+
+The more interesting cost is harder to measure.
+
+**Cognitive load.**
+
+Imagine a developer trying to understand why an API isn't responding. The size of the problem space depends entirely on what you built.
+
+<Tradeoffs>
+    <Side label="Docker: where the fault could be">
+        - Application
+        - Container
+        - Docker
+        - Host
+        - Network
+    </Side>
+    <Side label="Kubernetes: where the fault could be">
+        - Application
+        - Container
+        - Pod
+        - ReplicaSet
+        - Deployment
+        - Service
+        - Ingress
+        - Cluster networking
+        - Node
+        - Infrastructure
+    </Side>
+</Tradeoffs>
+
+Maybe the application is broken.
+
+Maybe the pod isn't healthy. Maybe the readiness probe is failing. Maybe the service selector doesn't match. Maybe the ingress configuration is wrong. Maybe there's a network policy involved. Maybe the node has a problem.
+
+Kubernetes gives us powerful mechanisms for managing infrastructure.
+
+But those mechanisms themselves become part of the system we have to operate.
+
+That's the trade-off.
+
+## "But Kubernetes Is Self-Healing"
+
+This is one of the arguments I hear quite often.
+
+And it's true. If a container crashes, Kubernetes can restart it. If a node disappears, workloads can be scheduled elsewhere.
+
+That's extremely useful.
+
+But we should be careful with the phrase **self-healing**.
+
+Restarting a broken application doesn't necessarily fix the reason it broke.
+
+If an application has a memory leak, repeatedly restarting it might keep the service alive — but it hasn't solved the problem.
+
+If a downstream service is failing, Kubernetes can't redesign your integration.
+
+If your database is overloaded, adding more API pods might actually make things worse.
+
+Orchestration can improve resilience.
+
+It cannot replace good system design.
+
+## Ask What Problem Kubernetes Is Solving
+
+Before introducing Kubernetes, I think there are some simple questions worth asking.
+
+### Do we actually need horizontal scaling?
+
+Not *could we need it someday?* but **are we currently experiencing workloads that require it?**
+
+A surprising number of business applications run comfortably on modern hardware without needing dozens of application instances.
+
+### Do we need workload scheduling across multiple machines?
+
+If you're operating tens or hundreds of services across a fleet of machines, manual container placement quickly becomes unreasonable.
+
+That's exactly the kind of problem orchestration solves.
+
+But if you have six containers running on two servers?
+
+The operational equation is very different.
+
+### Do we have the team to operate it?
+
+Installing Kubernetes isn't the difficult part. Operating it reliably over several years is.
+
+Someone needs to understand cluster upgrades, networking, storage, certificates, monitoring, security, RBAC, backups, ingress, resource allocation, node failures and deployment failures.
+
+If only one person in the company understands the cluster, you've potentially created a different kind of infrastructure risk.
+
+### What availability do we actually require?
+
+Everyone wants high availability. But "high availability" needs a definition.
+
+99% availability? 99.9%? 99.99%?
+
+Each additional nine has an engineering and operational cost.
+
+Sometimes the business genuinely requires that investment. Sometimes it doesn't.
+
+Architecture should reflect the actual business requirement rather than an abstract desire to make everything infinitely resilient.
+
+## Complexity Has to Pay Rent
+
+This has become one of the principles I increasingly use when thinking about systems.
+
+<Pull>Every piece of complexity we introduce should pay for itself.</Pull>
+
+A message broker introduces complexity. But if we need reliable asynchronous processing, that complexity may be justified.
+
+A distributed cache introduces complexity. But if database load or latency requires it, the trade-off may make sense.
+
+Microservices introduce complexity. But organisational boundaries or independent scaling requirements may justify them.
+
+Kubernetes introduces complexity too.
+
+The question isn't whether Kubernetes is good. The question is what we're getting in return for that complexity.
+
+If the answer is mostly *"we might need it later"*, I would think carefully before adding it.
+
+## Knowing When You've Outgrown Docker
+
+There is another side to this argument.
+
+Sometimes the simple architecture really has reached its limit.
+
+Perhaps you're now operating dozens of services. Deployments happen continuously. Different workloads need to scale independently. Machines are being added and removed regularly. You need workloads automatically rescheduled when infrastructure fails. Multiple teams are deploying applications independently. Resource allocation across servers has become difficult to manage.
+
+At that point, your infrastructure may start looking something like this.
+
+```text title="The point where placement stops being a decision you want to make"
+                    Load Balancer
+                          │
+             ┌────────────┼────────────┐
+             │            │            │
+             ▼            ▼            ▼
+          Node 1        Node 2        Node 3
+             │            │            │
+        ┌────┴────┐  ┌────┴────┐  ┌────┴────┐
+        │Services │  │Services │  │Services │
+        │Workers  │  │Workers  │  │Workers  │
+        │Jobs     │  │Jobs     │  │Jobs     │
+        └─────────┘  └─────────┘  └─────────┘
+```
+
+Now you're manually solving scheduling problems. You're manually solving failover problems. You're manually deciding where workloads should run. You're manually managing rolling deployments across multiple machines.
+
+At this point, Kubernetes starts earning its keep.
+
+You're no longer introducing orchestration complexity in anticipation of a problem. **You already have an orchestration problem.**
+
+That's an important distinction.
+
+## There Is Nothing Wrong With Starting Simple
+
+One thing experience has changed for me is my attitude towards simple architecture.
+
+Earlier in my career, simple sometimes felt temporary. Something we used until we could build the *proper* architecture.
+
+I don't think that way anymore.
+
+A simple architecture that reliably serves the business, can be understood by the engineering team, is easy to recover, and can evolve when necessary **is a proper architecture**.
+
+There is no prize for having the most components on an architecture diagram.
+
+The user doesn't care whether their request travelled through three containers or thirty pods. They care that the system works.
+
+The business cares that it remains reliable, secure and maintainable.
+
+And the engineering team cares that they can understand it at 2 AM when something fails.
+
+## Build for Today, Leave a Door Open for Tomorrow
+
+I don't advocate designing systems with no consideration for the future.
+
+Quite the opposite. We should think about where systems might go.
+
+But I prefer designing **evolutionary paths** rather than implementing hypothetical futures.
+
+Start with:
+
+```text
+Docker
++ Good CI/CD
++ Monitoring
++ Backups
++ Health Checks
++ Clear Service Boundaries
+```
+
+If the system grows, perhaps we move to:
+
+```text
+Multiple Hosts
++ Load Balancing
++ Managed Database
++ Centralised Logging
+```
+
+And when operational complexity genuinely demands orchestration:
+
+```text
+Kubernetes
+```
+
+The important thing is that each step should be driven by an actual problem.
+
+Not fashion. Not architecture diagrams. Not because that's what large technology companies use.
+
+## The Architecture of Google Isn't Necessarily Your Architecture
+
+This is perhaps one of the easiest traps in our industry.
+
+We read engineering articles from companies operating at extraordinary scale. Millions of requests. Thousands of engineers. Hundreds or thousands of services. Global infrastructure.
+
+Then we borrow their solutions.
+
+But sometimes we forget to borrow their problems.
+
+Technology choices that make perfect sense at Google, Netflix, Amazon or Uber don't automatically make sense for a team of ten engineers building a business application.
+
+The lesson we should take from large engineering organisations isn't *use the same technology they use.*
+
+It should be: **understand why they needed it.**
+
+Then ask whether we have the same problem.
+
+## Twenty Containers Don't Make You Netflix
+
+And that's okay. You don't need to pretend they do.
+
+Sometimes your entire production architecture can fit comfortably on a diagram that everyone on the engineering team understands.
+
+That's not architectural immaturity. That can be a strength.
+
+Because simplicity gives you something extremely valuable: **room to change.**
+
+When the requirements change, you can evolve the architecture. When traffic grows, you can scale. When availability requirements increase, you can add redundancy.
+
+And when managing those things becomes a problem in itself, Kubernetes will still be there.
+
+## What I've Learned
+
+The longer I've worked with software systems, the less impressed I am by complexity on its own.
+
+I've seen sophisticated architectures fail. I've seen surprisingly simple architectures run reliably for years.
+
+The difference is rarely how many technologies were involved. It is usually whether the people designing the system understood the problem they were solving.
+
+Kubernetes is an excellent solution. But like every good technology, it is excellent **within the right context**.
+
+So before creating the cluster, writing the Helm charts and building the deployment pipeline, I'd ask one question.
+
+<Pull>What problem do we have today that Kubernetes will solve?</Pull>
+
+If there's a good answer, use it.
+
+If there isn't, Docker might be enough.
+
+And there is absolutely nothing wrong with enough.
