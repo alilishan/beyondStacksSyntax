@@ -1,0 +1,130 @@
+---
+title: "Component reference"
+description: "Every MDX component and formatting option available when writing for Beyond Stacks & Syntax. Draft-only — visible in dev, never published."
+category: engineering
+date: 2026-08-23
+draft: true
+tags:
+  - reference
+---
+
+This file is a working reference, not an article. It has `draft: true` in its frontmatter, so it appears in `next dev` and is excluded from every production build, the sitemap and the feed. Delete it whenever it stops being useful.
+
+## Frontmatter
+
+Every article needs `title`, `description`, `category` and `date`. Everything else is optional.
+
+```yaml
+---
+title: "Why I Don't Start With Microservices"
+description: "One sentence that makes someone want to read it. Used on cards, in search results and in the RSS feed."
+category: architecture          # engineering | architecture | infrastructure | ai | thinking | teams
+date: 2026-09-01                # YYYY-MM-DD
+series: keep-it-simple          # optional, see src/lib/taxonomy.ts
+featured: true                  # optional, promotes to the homepage grid
+draft: false                    # optional, hides from production
+updated: 2026-10-14             # optional, shows an "Updated" stamp
+tags:                           # optional
+  - microservices
+  - boundaries
+---
+```
+
+`category` and `series` are validated against `src/lib/taxonomy.ts` at build time. A typo fails the build rather than silently creating an orphan page — which is the behaviour you want, because the alternative is finding out six months later.
+
+Reading time is calculated from the body. Don't set it by hand.
+
+## Headings
+
+`##` and `###` become the section list in the reading gutter on the right of the article. `#` is reserved for the title, which comes from frontmatter — never use it in the body.
+
+### A third-level heading
+
+Third-level headings are indented in the gutter.
+
+#### A fourth-level heading
+
+Fourth-level headings are styled as small mono labels and stay out of the gutter.
+
+## Text
+
+Regular prose is set in Newsreader at 18px over a 68-character measure. **Bold** carries weight, *italic* carries emphasis, `inline code` is monospaced, and [links](/about) are underlined in the accent colour. External links open in a new tab automatically.
+
+> A blockquote, for quoting someone else — or yourself, from an earlier and more confident time.
+
+- Unordered lists get a small accent dash instead of a bullet
+- Which keeps the texture consistent with the rest of the page
+- And avoids the default browser dot
+
+1. Ordered lists keep their numbers
+2. Set in mono, because they're data
+3. Not decoration
+
+## Code
+
+Fenced blocks are highlighted by Shiki with a light and dark theme baked in, so they follow the site theme without a flash.
+
+```ts title="src/lib/articles.ts" showLineNumbers {3-5}
+export function getFeaturedArticles(limit = 3): ArticleMeta[] {
+    const featured = all().filter((a) => a.featured);
+    // Falling back to the newest articles keeps the homepage from
+    // collapsing when nothing is explicitly marked as featured.
+    const pool = featured.length > 0 ? featured : all();
+    return pool.slice(0, limit).map(stripBody);
+}
+```
+
+`title=` adds the filename bar, `showLineNumbers` adds the gutter, and `{3-5}` highlights those lines with an accent rule.
+
+## Note
+
+For an aside that would break the flow of the argument if it were left inline.
+
+<Note title="On premature abstraction">
+    Every abstraction creates another thing to understand. That's not an
+    argument against abstraction — it's an argument for making sure it's
+    paying for itself.
+</Note>
+
+## Pull
+
+For the one sentence the article is really about. Use it once. Twice at the absolute most.
+
+<Pull>Don't introduce complexity until the problem justifies it.</Pull>
+
+## Trade-offs
+
+The publication argues in trade-offs, so they get a component rather than a table.
+
+<Tradeoffs>
+    <Side label="What you gain">
+        - Independent deployment per service
+        - Team ownership boundaries that match the org chart
+        - Failure isolation, when the boundaries are drawn correctly
+    </Side>
+    <Side label="What it costs">
+        - A distributed system's debugging story
+        - Network calls where you used to have function calls
+        - Data consistency becomes your problem, not the database's
+    </Side>
+</Tradeoffs>
+
+## Tables
+
+Standard markdown tables work, set in mono, and scroll horizontally on narrow screens rather than breaking the layout.
+
+| Approach         | Good when                          | Painful when                     |
+| ---------------- | ---------------------------------- | -------------------------------- |
+| Modular monolith | One team, one deploy cadence       | Teams need independent releases  |
+| Microservices    | Clear boundaries, separate teams   | Boundaries are still moving      |
+| Serverless       | Spiky, event-shaped workloads      | Long-running or stateful work    |
+
+## Images
+
+Place files in `public/` and reference them from the root. They're rendered through `next/image`, so they're optimised and lazy-loaded.
+
+```md
+![A diagram of the invoice pipeline](/images/invoice-pipeline.png)
+```
+
+Always write real alt text. If the image is purely decorative, it probably shouldn't be in the article.

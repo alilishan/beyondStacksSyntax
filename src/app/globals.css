@@ -1,0 +1,573 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+   Beyond Stacks & Syntax — design tokens
+
+   Inherited from the resume site at resume.alilishan.com: the slate-based
+   oklch scale, hairline borders, the diagonal hatch, JetBrains Mono, and the
+   #9CA0A8 grey it uses for links.
+
+   The palette is monochrome. There is no hue accent — emphasis is carried by
+   lightness, the way it is on the resume. Two roles do that work:
+
+     --mark        the resume's light link grey. Decoration only: the `//`
+                   marks, list dashes, the rule beneath emphasised text.
+     --accent-ink  near-ink. Anything interactive or active: prose links,
+                   the current section, reading progress.
+
+   Splitting them matters. --mark sits around 2.5:1 against paper, which is
+   fine for an ornament and unreadable for a link, so links never use it.
+--------------------------------------------------------------------------- */
+
+:root {
+    --radius: 0.625rem;
+
+    /* surfaces — the page is white, like the resume. Cards are the same white
+       and are defined by their hairline border rather than by a lift. */
+    --background: oklch(1 0 0);
+    --paper: oklch(1 0 0);
+    --card: oklch(1 0 0);
+    --popover: oklch(1 0 0);
+
+    /* ink */
+    --foreground: oklch(0.32 0.012 264.7);
+    --ink: oklch(0.19 0.016 264.7);
+    --card-foreground: oklch(0.19 0.016 264.7);
+    --popover-foreground: oklch(0.19 0.016 264.7);
+    --muted-foreground: oklch(0.53 0.024 257.4);
+    --faint: oklch(0.66 0.018 257.4);
+
+    /* emphasis — monochrome */
+    --mark: oklch(0.72 0.014 257.4); /* ≈ #9CA0A8, the resume's link grey */
+    --accent-ink: oklch(0.28 0.013 264.7);
+    --accent-ink-hover: oklch(0.15 0.013 264.7);
+    --accent-wash: oklch(0.972 0.004 247.9);
+    --accent-edge: oklch(0.87 0.009 255.5);
+
+    /* shadcn surface roles */
+    --primary: oklch(0.19 0.016 264.7);
+    --primary-foreground: oklch(0.985 0.002 247.9);
+    --secondary: oklch(0.968 0.007 247.9);
+    --secondary-foreground: oklch(0.21 0.042 265.8);
+    --muted: oklch(0.968 0.007 247.9);
+    --accent: oklch(0.968 0.007 247.9);
+    --accent-foreground: oklch(0.21 0.042 265.8);
+    --destructive: oklch(0.577 0.245 27.3);
+
+    --border: oklch(0.916 0.011 255.5);
+    --hairline: oklch(0.895 0.012 255.5);
+    --input: oklch(0.929 0.013 255.5);
+    --ring: var(--accent-ink);
+
+    /* the diagonal hatch, inherited from the resume site */
+    --pattern-foreground: oklch(0.955 0.006 247.9);
+
+    /* code surface */
+    --code-bg: oklch(0.205 0.02 264.7);
+    --code-fg: oklch(0.9 0.008 247.9);
+    --code-border: oklch(0.3 0.02 264.7);
+    --code-inline-bg: oklch(0.965 0.008 247.9);
+}
+
+.dark {
+    --background: oklch(0.163 0.017 264.7);
+    --paper: oklch(0.203 0.019 264.7);
+    --card: oklch(0.203 0.019 264.7);
+    --popover: oklch(0.203 0.019 264.7);
+
+    --foreground: oklch(0.83 0.012 247.9);
+    --ink: oklch(0.965 0.003 247.9);
+    --card-foreground: oklch(0.965 0.003 247.9);
+    --popover-foreground: oklch(0.965 0.003 247.9);
+    --muted-foreground: oklch(0.66 0.021 256.8);
+    --faint: oklch(0.54 0.02 256.8);
+
+    --mark: oklch(0.58 0.02 256.8);
+    --accent-ink: oklch(0.96 0.003 247.9);
+    --accent-ink-hover: oklch(1 0 0);
+    --accent-wash: oklch(1 0 0 / 6%);
+    --accent-edge: oklch(1 0 0 / 22%);
+
+    --primary: oklch(0.929 0.013 255.5);
+    --primary-foreground: oklch(0.21 0.042 265.8);
+    --secondary: oklch(0.27 0.022 260);
+    --secondary-foreground: oklch(0.985 0.003 247.9);
+    --muted: oklch(0.27 0.022 260);
+    --accent: oklch(0.27 0.022 260);
+    --accent-foreground: oklch(0.985 0.003 247.9);
+    --destructive: oklch(0.704 0.191 22.2);
+
+    --border: oklch(1 0 0 / 11%);
+    --hairline: oklch(1 0 0 / 13%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: var(--accent-ink);
+
+    --pattern-foreground: oklch(1 0 0 / 5%);
+
+    --code-bg: oklch(0.152 0.016 264.7);
+    --code-fg: oklch(0.86 0.01 247.9);
+    --code-border: oklch(1 0 0 / 9%);
+    --code-inline-bg: oklch(1 0 0 / 7%);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-paper: var(--paper);
+    --color-ink: var(--ink);
+    --color-faint: var(--faint);
+    --color-hairline: var(--hairline);
+
+    --color-mark: var(--mark);
+    --color-accent-ink: var(--accent-ink);
+    --color-accent-ink-hover: var(--accent-ink-hover);
+    --color-accent-wash: var(--accent-wash);
+    --color-accent-edge: var(--accent-edge);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-reading: var(--font-plex-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-sans: var(--font-reading);
+
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground font-mono antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        @apply text-ink font-mono;
+        text-wrap: balance;
+    }
+
+    :focus-visible {
+        @apply outline-2 outline-offset-2 outline-accent-ink rounded-xs;
+    }
+
+    ::selection {
+        background: var(--accent-wash);
+        color: var(--ink);
+    }
+}
+
+/* ---------------------------------------------------------------------------
+   Inherited texture: the 315° hairline hatch from the resume site.
+--------------------------------------------------------------------------- */
+
+.hatch {
+    background-image: repeating-linear-gradient(
+        315deg,
+        var(--pattern-foreground) 0,
+        var(--pattern-foreground) 1px,
+        transparent 0,
+        transparent 50%
+    );
+    background-size: 10px 10px;
+}
+
+/* ---------------------------------------------------------------------------
+   Signature: the comment gutter.
+
+   A hairline rule down the left of the content column, carrying mono `//`
+   marks and metadata — the margin of the file, where the thinking lives.
+--------------------------------------------------------------------------- */
+
+.gutter-rule {
+    position: relative;
+}
+
+.gutter-rule::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 1px;
+    background: var(--hairline);
+}
+
+.comment-mark::before {
+    content: "//";
+    color: var(--mark);
+    margin-right: 0.5ch;
+}
+
+/* ---------------------------------------------------------------------------
+   Long-form prose. Sans body, mono headings — the argument and the artefact
+   stay visually separate.
+--------------------------------------------------------------------------- */
+
+.prose-bss {
+    --measure: 68ch;
+    font-family: var(--font-reading);
+    font-size: 1.0625rem;
+    line-height: 1.72;
+    color: var(--foreground);
+}
+
+.prose-bss > * {
+    max-width: var(--measure);
+}
+
+.prose-bss p,
+.prose-bss ul,
+.prose-bss ol,
+.prose-bss blockquote {
+    margin-block: 1.35em;
+}
+
+.prose-bss a {
+    color: var(--accent-ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--accent-edge);
+    transition: text-decoration-color 150ms ease, color 150ms ease;
+}
+
+.prose-bss a:hover {
+    color: var(--accent-ink-hover);
+    text-decoration-color: currentColor;
+}
+
+.prose-bss strong {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.prose-bss em {
+    font-style: italic;
+}
+
+.prose-bss h2,
+.prose-bss h3,
+.prose-bss h4 {
+    font-family: var(--font-mono);
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    scroll-margin-top: 6rem;
+}
+
+/* rehype-autolink-headings wraps heading text in an anchor. It must not pick up
+   the prose link treatment — it's a permalink, not a reference. */
+.prose-bss .heading-anchor {
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+}
+
+.prose-bss .heading-anchor:hover {
+    color: var(--accent-ink);
+}
+
+.prose-bss h2 .heading-anchor::before,
+.prose-bss h3 .heading-anchor::before {
+    content: "#";
+    position: absolute;
+    right: calc(100% + 0.4ch);
+    color: var(--mark);
+    opacity: 0;
+    transition: opacity 150ms ease;
+}
+
+.prose-bss h2 .heading-anchor:hover::before,
+.prose-bss h3 .heading-anchor:hover::before,
+.prose-bss h2 .heading-anchor:focus-visible::before,
+.prose-bss h3 .heading-anchor:focus-visible::before {
+    opacity: 1;
+}
+
+.prose-bss h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-block: 2.75em 0.9em;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--hairline);
+}
+
+.prose-bss h2:first-child {
+    margin-top: 0;
+    border-top: 0;
+    padding-top: 0;
+}
+
+.prose-bss h3 {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-block: 2.1em 0.7em;
+}
+
+.prose-bss h4 {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted-foreground);
+    margin-block: 2em 0.6em;
+}
+
+.prose-bss ul,
+.prose-bss ol {
+    padding-left: 1.35em;
+}
+
+.prose-bss ul > li {
+    list-style: none;
+    position: relative;
+}
+
+.prose-bss ul > li::before {
+    content: "";
+    position: absolute;
+    left: -1.05em;
+    top: 0.72em;
+    width: 5px;
+    height: 1px;
+    background: var(--mark);
+}
+
+.prose-bss ol {
+    list-style: decimal;
+}
+
+.prose-bss ol > li::marker {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--muted-foreground);
+}
+
+.prose-bss li {
+    margin-block: 0.5em;
+}
+
+.prose-bss li > ul,
+.prose-bss li > ol {
+    margin-block: 0.5em;
+}
+
+/* Pull quote. The `//` lives here rather than in JSX because MDX may or may
+   not wrap the children in a <p>, depending on how the author laid it out. */
+.prose-bss .pull-quote > p {
+    margin-block: 0;
+    font: inherit;
+    color: inherit;
+    max-width: none;
+}
+
+.prose-bss .pull-quote > p + p {
+    margin-top: 0.6em;
+}
+
+.prose-bss .pull-quote > p:first-child::before,
+.prose-bss .pull-quote:not(:has(> p))::before {
+    content: "// ";
+    color: var(--mark);
+}
+
+/* Figures and code break out past the text measure; everything else aligns
+   with it. Note these rules are unlayered, so they beat Tailwind utilities on
+   direct children of .prose-bss — set widths here, not with a class. */
+.prose-bss > figure {
+    max-width: none;
+}
+
+.prose-bss blockquote {
+    border-left: 2px solid var(--accent-edge);
+    padding-left: 1.4em;
+    color: var(--ink);
+}
+
+.prose-bss blockquote p {
+    margin-block: 0.6em;
+}
+
+.prose-bss hr {
+    max-width: var(--measure);
+    margin-block: 3em;
+    border: 0;
+    border-top: 1px solid var(--hairline);
+}
+
+.prose-bss img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--hairline);
+}
+
+.prose-bss table {
+    max-width: 100%;
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    margin-block: 2em;
+}
+
+.prose-bss th,
+.prose-bss td {
+    border: 1px solid var(--hairline);
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+.prose-bss th {
+    background: var(--muted);
+    color: var(--ink);
+    font-weight: 700;
+}
+
+/* inline code */
+.prose-bss :not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.825em;
+    background: var(--code-inline-bg);
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    padding: 0.12em 0.38em;
+    color: var(--ink);
+    white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------------
+   Code blocks — rehype-pretty-code output.
+--------------------------------------------------------------------------- */
+
+.prose-bss figure[data-rehype-pretty-code-figure] {
+    max-width: none;
+    margin-block: 2em;
+}
+
+.prose-bss figure[data-rehype-pretty-code-figure] figcaption[data-rehype-pretty-code-title] {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-bottom: 0;
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: 0.6rem 1rem;
+}
+
+.prose-bss figure[data-rehype-pretty-code-figure]:has(figcaption) pre {
+    border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.prose-bss pre {
+    background: var(--code-bg) !important;
+    color: var(--code-fg);
+    border: 1px solid var(--code-border);
+    border-radius: var(--radius);
+    padding: 1.05rem 0;
+    overflow-x: auto;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    tab-size: 4;
+}
+
+.prose-bss pre code {
+    font-family: var(--font-mono);
+    display: grid;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    counter-reset: line;
+}
+
+.prose-bss pre code > [data-line] {
+    padding-inline: 1.1rem;
+    border-left: 2px solid transparent;
+}
+
+.prose-bss pre code[data-line-numbers] > [data-line]::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 1.6rem;
+    margin-right: 1.1rem;
+    text-align: right;
+    color: oklch(0.55 0.02 264.7);
+}
+
+.prose-bss pre code > [data-highlighted-line] {
+    background: oklch(1 0 0 / 7%);
+    border-left-color: oklch(0.72 0.014 257.4);
+}
+
+.prose-bss mark[data-highlighted-chars] {
+    background: oklch(1 0 0 / 13%);
+    border-radius: 3px;
+    padding: 0.1em 0.25em;
+    color: inherit;
+}
+
+/* The code surface stays dark in both themes, so the only theme-dependent part
+   is the border, which the tokens above already handle. */
+
+/* ---------------------------------------------------------------------------
+   Motion
+--------------------------------------------------------------------------- */
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.rise {
+    animation: rise 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .rise {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}

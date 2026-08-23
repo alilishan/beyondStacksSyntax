@@ -1,0 +1,473 @@
+---
+title: "The Technology Was Never the Hardest Part"
+description: "Revisiting my MSc research many years later — and realising how little the hardest problems in software projects have changed."
+category: teams
+series: from-the-archive
+date: 2026-08-23
+featured: true
+tags:
+  - Software Engineering
+  - Technical Leadership
+  - Project Management
+  - Organisational Culture
+  - Lessons Learned
+---
+
+<Note title="From the archive">
+    This article reflects on my 2010 MSc research, *“Mitigating the Influence of
+    Organisational Culture Through Adaptation of Information Technology Project
+    Management Methodologies in the Government of Maldives.”* The research
+    examined organisational influences on IT project implementation and proposed
+    an adaptive project-management framework based on the findings.
+</Note>
+
+In November 2010, I completed my MSc thesis with a title only academia could love:
+
+**“Mitigating the Influence of Organisational Culture Through Adaptation of Information Technology Project Management Methodologies in the Government of Maldives.”**
+
+It is a mouthful.
+
+But underneath that title was a fairly simple question:
+
+**Why do IT projects fail even when the technology itself isn't necessarily the problem?**
+
+At the time, I approached that question as a postgraduate student. I researched organisational culture, studied project-management methodologies, interviewed people involved in technology projects, collected data and eventually proposed a framework for adapting the way projects were managed.
+
+Looking at that work again many years later, after spending much of my career designing systems, building software, leading development teams and delivering technology projects, something stands out to me.
+
+The tools have changed enormously.
+
+The problems involving people haven't changed nearly as much.
+
+{/* Add /images/archive/thesis-title.png, then uncomment:
+<Figure
+    src="/images/archive/thesis-title.png"
+    alt="Title slide of the 2010 MSc thesis"
+    caption="Where this particular line of thinking started. November 2010."
+/>
+*/}
+
+---
+
+## What I Was Trying to Understand
+
+The thesis started from an observation that was already well established at the time: governments and organisations were investing heavily in technology, yet IT implementations — particularly in developing countries — frequently struggled.
+
+The obvious explanation is often technology.
+
+Wrong platform.
+Poor architecture.
+Bad software.
+Insufficient infrastructure.
+
+But I wanted to look somewhere else.
+
+I was interested in the organisation surrounding the technology.
+
+The research question I eventually settled on was:
+
+> How can management methodologies be adapted to mitigate organisational influences on the successful implementation of IT projects?
+
+The distinction is important.
+
+I wasn't asking:
+
+**How do we force an organisation to follow a project-management methodology?**
+
+I was asking:
+
+**How should the methodology adapt to the organisation in which the project actually has to succeed?**
+
+Looking back, I think that distinction was probably more important than I appreciated at the time.
+
+## You Can't Install a Methodology Like Software
+
+One of the ideas behind the thesis was that forcing an organisation to change its culture can be incredibly difficult.
+
+You cannot simply introduce a process, give everyone a document explaining it, hold a training session and declare:
+
+*“We are Agile now.”*
+
+Or PRINCE2.
+
+Or Scrum.
+
+Or DevOps.
+
+Or whatever framework happens to be fashionable at the time.
+
+Organisations already have ways of working.
+
+They have hierarchies, personalities, informal communication channels, decision-making habits, departmental boundaries and different attitudes towards responsibility and risk.
+
+A methodology lands in the middle of all of that.
+
+My argument was therefore that rather than pretending those characteristics didn't exist, **project-management processes needed to account for them.**
+
+That idea feels even more obvious to me today.
+
+## The Four Problems
+
+As part of the research, I looked at organisations within the Maldives and tried to identify recurring problems affecting IT project delivery.
+
+Four areas stood out:
+
+1. Communication management
+2. Roles and responsibilities
+3. Risk management
+4. Organisational change management
+
+{/* Add /images/archive/identified-issues.png, then uncomment:
+<Figure
+    src="/images/archive/identified-issues.png"
+    alt="The 'Identified Issues' slide from the 2010 thesis"
+    caption="The four recurring issues identified in the research."
+/>
+*/}
+
+When I look at this list today, I almost have to smile.
+
+Because after all the changes our industry has gone through, I could put essentially the same four headings on a whiteboard during a project review today.
+
+We have GitHub.
+
+Slack.
+
+Teams.
+
+Jira.
+
+Linear.
+
+CI/CD.
+
+Cloud infrastructure.
+
+Containers.
+
+Microservices.
+
+Observability platforms.
+
+AI coding assistants.
+
+And an almost ridiculous number of ways for people to communicate with each other.
+
+Yet projects can still fail because **the right people didn't communicate at the right time.**
+
+They still suffer because nobody was quite sure who owned a decision.
+
+Risks are still sometimes discussed only after they become incidents.
+
+And organisations still underestimate how difficult it is to change the way people actually work.
+
+Technology has given us much better tools.
+
+It hasn't removed the organisational problem.
+
+## Communication Is Not the Same as Having Communication Tools
+
+This is probably one area where my perspective has changed considerably.
+
+Years ago, I tended to think about communication management in a fairly structured project-management sense:
+
+- Communication planning
+- Information distribution
+- Performance reporting
+- Stakeholder management
+
+Those elements appeared explicitly in the framework I proposed.
+
+Today I would describe the problem differently.
+
+<Pull>
+    Communication isn't about how much information a project produces. It's
+    about whether the right context reaches the right person before a decision
+    is made.
+</Pull>
+
+A team can have daily stand-ups, hundreds of Slack messages, Jira tickets, documentation and weekly reports and still communicate badly.
+
+I've seen situations where developers know about a technical limitation.
+
+Management knows about a business deadline.
+
+The customer knows about an operational constraint.
+
+Everyone possesses a piece of the truth.
+
+The problem is that nobody has assembled those pieces together.
+
+That isn't a tooling problem.
+
+It is a systems problem involving people.
+
+And increasingly, I think good technical leadership is partly about creating the conditions where that information can move.
+
+## Ownership Matters More Than Process
+
+Another issue identified in the research was **roles and responsibilities**, particularly around authority, responsibility and power.
+
+Today I would probably use a simpler word:
+
+**Ownership.**
+
+One lesson that becomes very clear after delivering enough real systems is that a process cannot compensate for a lack of ownership.
+
+You can create approval flows.
+
+You can define RACI matrices.
+
+You can create tickets.
+
+You can assign tasks.
+
+But eventually somebody needs to feel responsible for the outcome rather than merely responsible for completing their part of the process.
+
+There is a significant difference between:
+
+> “My task is finished.”
+
+and:
+
+> “The problem is solved.”
+
+That distinction has become increasingly important to me over the years.
+
+## The Framework I Proposed
+
+The final output of the thesis was a framework.
+
+Its purpose was not to invent another project-management methodology.
+
+Instead, the idea was to take an existing project-management approach and introduce adaptation around the organisational issues identified by the research.
+
+The framework considered:
+
+- selecting an appropriate project-management methodology;
+- establishing project objectives during initiation;
+- adapting project phases around communication, responsibility, risk, organisational planning, monitoring and control;
+- deliberately addressing organisational change;
+- and capturing lessons at the individual, project and government levels so that the next project could benefit from the previous one.
+
+{/* Add /images/archive/framework-diagram.png, then uncomment:
+<Figure
+    src="/images/archive/framework-diagram.png"
+    alt="The adaptive project-management framework diagram from the 2010 thesis"
+    caption="The adaptive project-management framework proposed in 2010."
+/>
+*/}
+
+Looking at the diagram now, there are certainly things I would change.
+
+The terminology belongs to its time.
+
+My understanding of software delivery has evolved considerably.
+
+And after working on real production systems, I would put much more emphasis today on feedback loops, incremental delivery, observability, technical ownership and continuous validation.
+
+But the central idea?
+
+I still agree with it.
+
+<Pull>
+    Don't blindly apply a methodology. Adapt the way you work to the environment
+    in which the system must succeed.
+</Pull>
+
+## If I Drew This Framework Today
+
+I don't think I would start with:
+
+**“Which project-management methodology should we use?”**
+
+I'd probably start with:
+
+**What kind of organisation are we actually dealing with?**
+
+How are decisions made?
+
+Who really has authority?
+
+Who owns the business outcome?
+
+Who understands the operational reality?
+
+How comfortable is the organisation with change?
+
+How quickly can we get feedback?
+
+Where are the communication boundaries?
+
+What happens when something goes wrong?
+
+And perhaps most importantly:
+
+**Can the people building the system speak directly enough with the people who actually need the system?**
+
+Only after understanding those things would I worry about the mechanics of the delivery process.
+
+<Tradeoffs>
+    <Side label="Where I started in 2010">
+        - Methodology
+        - Initiation
+        - Project phases
+        - Adaptation
+        - Continuous learning
+    </Side>
+    <Side label="Where I'd start today">
+        - Organisation
+        - People, constraints and goals
+        - Delivery approach
+        - Build → observe → learn → adapt, and back again
+    </Side>
+</Tradeoffs>
+
+The order matters more than the contents. In 2010 the methodology came first and the organisation was something to be mitigated. Today I'd understand the organisation first and let the delivery approach follow from it.
+
+That may eventually be worth an article of its own.
+
+## One Thing I Would Change
+
+The thesis talked about mitigating the **influence** of organisational culture.
+
+I'm not sure I would phrase it that way today.
+
+Culture isn't necessarily interference that needs to be eliminated.
+
+**It is part of the system.**
+
+Every technology project operates inside two architectures.
+
+There is the **technical architecture**:
+
+- applications;
+- databases;
+- APIs;
+- infrastructure;
+- integrations;
+- networks;
+- security;
+- deployment pipelines.
+
+Then there is the **organisational architecture**:
+
+- people;
+- responsibilities;
+- incentives;
+- communication paths;
+- authority;
+- processes;
+- institutional knowledge.
+
+We spend enormous amounts of time designing the first.
+
+Sometimes we barely acknowledge the second.
+
+Yet both architectures have to work for the project to succeed.
+
+## The Part That Has Aged Best
+
+There is one slide from my thesis that now stands out to me more than anything else.
+
+It contains essentially two words:
+
+<Pull>KEY → INTEGRATION</Pull>
+
+{/* Add /images/archive/key-integration.png, then uncomment:
+<Figure
+    src="/images/archive/key-integration.png"
+    alt="The 'KEY → INTEGRATION' slide from the 2010 thesis"
+    caption="Perhaps the simplest slide in the thesis — and the one that aged the best."
+/>
+*/}
+
+At the time, I was talking about integrating project-management practices with organisational realities.
+
+Today, I would interpret that word much more broadly.
+
+Integration between technology and business.
+
+Integration between developers and operations.
+
+Integration between architecture and implementation.
+
+Integration between systems.
+
+Integration between teams.
+
+Integration between technical decisions and business consequences.
+
+And, ultimately, integration between **people and technology**.
+
+The longer I work in this industry, the less I see software engineering as simply the act of writing software.
+
+The code matters.
+
+Architecture matters.
+
+Infrastructure matters.
+
+Security matters.
+
+Performance matters.
+
+But all of those exist inside something larger.
+
+## Sixteen Years Later
+
+Reading something you wrote this long ago is a strange experience.
+
+There are parts I would rewrite.
+
+There are assumptions I would challenge.
+
+There are diagrams I would definitely redesign.
+
+And there are PowerPoint design choices from 2010 that are probably best left in 2010.
+
+But I wouldn't change the fundamental question behind the research.
+
+If anything, years of actually building and delivering systems have made me appreciate it more.
+
+We spend a lot of time in technology discussing **stacks and syntax**.
+
+Which language?
+
+Which framework?
+
+Monolith or microservices?
+
+Containers or serverless?
+
+REST or GraphQL?
+
+SQL or NoSQL?
+
+And now, inevitably:
+
+Which AI model?
+
+Those are useful discussions.
+
+But some of the hardest problems in technology exist one level above them.
+
+How do people work together?
+
+How do we make decisions?
+
+How do we communicate?
+
+Who takes ownership?
+
+How does an organisation respond to change?
+
+And how do we design our technology *and our way of building it* around those realities?
+
+I started asking some of those questions in 2010.
+
+I'm still asking them today.
+
+I just have many more production incidents, deployments, architecture diagrams, project meetings, mistakes and lessons behind the answers now.
+
+And that feels like an appropriate place to begin **Beyond Stacks & Syntax**.
