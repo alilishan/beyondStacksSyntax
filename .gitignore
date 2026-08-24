@@ -20,3 +20,8 @@ yarn-error.log*
 .vercel
 *.tsbuildinfo
 next-env.d.ts
+
+# agent tooling — installed per-machine via `npx skills add`, not part of the site
+.agents/
+.claude/skills/
+.firecrawl/

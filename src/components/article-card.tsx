@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -20,6 +21,18 @@ export function ArticleCard({
                 className,
             )}
         >
+            {article.cover ? (
+                <div className="-mx-6 -mt-6 mb-5 overflow-hidden border-b border-hairline">
+                    <Image
+                        src={article.cover}
+                        alt={article.coverAlt ?? ""}
+                        width={1600}
+                        height={666}
+                        className="aspect-[2.4/1] w-full object-contain"
+                    />
+                </div>
+            ) : null}
+
             <div className="flex items-center gap-3">
                 <CategoryChip category={article.category} asLink={false} />
                 {article.series && article.seriesName ? (

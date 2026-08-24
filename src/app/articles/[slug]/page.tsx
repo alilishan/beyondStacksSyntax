@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 
@@ -147,6 +148,19 @@ export default async function ArticlePage({
             </header>
 
             <div className="mx-auto max-w-6xl px-5 sm:px-8">
+                {article.cover ? (
+                    <figure className="mt-10 overflow-hidden rounded-lg border border-hairline bg-paper">
+                        <Image
+                            src={article.cover}
+                            alt={article.coverAlt ?? ""}
+                            width={1600}
+                            height={666}
+                            priority
+                            className="h-auto w-full"
+                        />
+                    </figure>
+                ) : null}
+
                 <div className="grid gap-x-12 pt-14 lg:grid-cols-[minmax(0,1fr)_13rem]">
                     <article id={ARTICLE_BODY_ID} className="min-w-0 lg:order-1">
                         <MDXBody source={article.body} />

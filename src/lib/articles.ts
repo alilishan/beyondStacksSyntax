@@ -25,6 +25,9 @@ export type Article = {
     /** ISO-8601, for <time> and structured data. */
     isoDate: string;
     updated?: string;
+    /** Optional cover image, served from /public. */
+    cover?: string;
+    coverAlt?: string;
     featured: boolean;
     draft: boolean;
     tags: string[];
@@ -105,6 +108,8 @@ function parseArticle(file: string): Article {
         date: date.toISOString(),
         isoDate: date.toISOString(),
         updated,
+        cover: typeof data.cover === "string" ? data.cover : undefined,
+        coverAlt: typeof data.coverAlt === "string" ? data.coverAlt : undefined,
         featured: data.featured === true,
         draft: data.draft === true,
         tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
