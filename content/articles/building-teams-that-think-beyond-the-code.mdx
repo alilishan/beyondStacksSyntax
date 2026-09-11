@@ -1,0 +1,425 @@
+---
+title: "Building Teams That Think Beyond the Code"
+description: "Good software doesn't come from good code alone. It comes from teams that understand why they are building it in the first place."
+category: teams
+series: from-production
+date: 2026-09-11
+featured: true
+cover: /images/covers/building-teams-that-think-beyond-the-code.c57bcc9b.webp
+coverAlt: "A diagram in three parts. The ticket, working code: a task card with API responds, tests pass and ticket closed all ticked, above a code icon asking done? Ask the right questions, why they called me the police: a police badge over four questions — did you try the whole workflow, what if the user does this, is this what they actually need, why are we calling this finished. The outcome, working software: a person at a screen showing a check mark, surrounded by UI and UX, architecture, real data and real users. Below, four steps — understand the problem, build what they need rather than just what they ask for, test like a user, own the outcome rather than saying my part is done — captioned commitment and flexibility."
+tags:
+  - Technical Leadership
+  - Engineering Culture
+  - Ownership
+  - UX
+  - Testing
+---
+
+Over the years, I have worked with and built many development teams.
+
+Different technologies. Different industries. Different personalities. Different levels of experience.
+
+And somewhere along the way, I learned something that sounds obvious now:
+
+**A team of good developers does not automatically make a good software team.**
+
+Technical ability matters. Of course it does.
+
+But some of the best software I have seen delivered wasn't simply the result of having the smartest engineers in the room. It came from teams that developed the right mindset about what they were building, who they were building it for, and what it meant to actually finish something.
+
+That mindset is much harder to build than technical skill.
+
+And apparently, while trying to build it, I became known as **the police**.
+
+## They Called Me the Police
+
+It was mostly a joke.
+
+But like most good jokes, there was some truth behind it.
+
+Why wasn't this tested?
+
+Did you actually try the entire workflow?
+
+What happens if the user does this?
+
+Why does this button behave differently from the one on the previous screen?
+
+Why are we implementing it this way?
+
+Is this what the user actually needs?
+
+Why are we calling this finished?
+
+These are the kinds of questions I tend to ask.
+
+From a developer's perspective, especially when you're trying to close a task, these questions can probably become annoying very quickly.
+
+The code works.
+
+The API responds.
+
+The ticket says what was requested.
+
+So what's the problem?
+
+<Pull>Working code and working software are not always the same thing.</Pull>
+
+And I think understanding that difference is one of the most important steps in building a strong development team.
+
+## Solve the Problem, Not the Ticket
+
+Modern software development revolves around tasks.
+
+Tickets. Stories. Requirements. Acceptance criteria. Pull requests.
+
+We need these things. They bring structure to what would otherwise become chaos.
+
+But they can also create a dangerous mindset:
+
+> My job is to complete the ticket.
+
+It isn't.
+
+The ticket is simply a representation of a problem somebody is trying to solve.
+
+Sometimes it represents that problem very well.
+
+Sometimes it doesn't.
+
+A developer who only reads the requirement asks:
+
+**"What do I need to build?"**
+
+A developer who understands the problem asks:
+
+**"What are we trying to achieve?"**
+
+That difference matters.
+
+I have seen situations where a requirement was implemented exactly as written, technically correct in every way, and still failed when placed in front of the actual user.
+
+Nobody had done anything "wrong."
+
+The requirement was followed.
+
+The code worked.
+
+The tests passed.
+
+But the problem remained.
+
+That is why I encourage developers to understand the context around their work.
+
+Who is using this?
+
+What are they trying to accomplish?
+
+What were they doing before we built this?
+
+What happens immediately before this screen?
+
+What happens after it?
+
+Once developers start asking those questions, they stop thinking only about features.
+
+They start thinking about software.
+
+## Give Users What They Need, Not Just What They Ask For
+
+This is something that needs to be approached carefully.
+
+It is easy for a software team to become arrogant and assume that because we understand technology, we understand the user's business better than they do.
+
+We usually don't.
+
+Users understand their problems.
+
+They understand their work.
+
+They understand the frustrations they experience every day.
+
+But when asked what they want from software, people naturally describe solutions based on what they already know.
+
+"Put another button here."
+
+"Add another report."
+
+"Give me an Excel export."
+
+"Add another field."
+
+"Make this screen look like the old system."
+
+Those requests are valuable.
+
+But they should also start a conversation.
+
+**Why do you need that button?**
+
+**What are you doing with that spreadsheet after exporting it?**
+
+**Why do you need this information on this screen?**
+
+Sometimes the answer confirms exactly what was requested.
+
+Other times, you discover that there is a much simpler solution.
+
+The goal isn't to ignore what users ask for.
+
+It is to understand **why they are asking for it**.
+
+That is where good software design begins.
+
+## The User Doesn't See Your Architecture
+
+As engineers, we appreciate what happens underneath the software.
+
+A well-designed architecture.
+
+Clean APIs.
+
+Good abstractions.
+
+Efficient database queries.
+
+Reliable infrastructure.
+
+Proper separation of concerns.
+
+Maintainable code.
+
+These things matter enormously.
+
+But there is an uncomfortable truth developers sometimes forget:
+
+**The user sees almost none of it.**
+
+They see the screen.
+
+They see the button that doesn't make sense.
+
+They see the form that asks for information they already entered somewhere else.
+
+They see the report that takes too many steps to generate.
+
+They see the error message that means nothing to them.
+
+They see the workflow that requires six clicks when it could have required two.
+
+<Pull>To the user, the interface is the software.</Pull>
+
+That is why I have always considered UI and UX to be just as important as what happens under the hood.
+
+Beautiful architecture cannot compensate for software that people struggle to use.
+
+At the same time, a beautiful interface sitting on top of poorly designed engineering will eventually collapse under its own weight.
+
+Good software needs both.
+
+The challenge is getting developers to care about both.
+
+## Ownership Is More Important Than "My Part Is Done"
+
+One phrase I never like hearing in a development team is:
+
+**"My part is done."**
+
+Software rarely fails neatly along team boundaries.
+
+The frontend developer can say the UI works.
+
+The backend developer can say the API works.
+
+The infrastructure team can say the environment is running.
+
+The tester can say the individual test cases passed.
+
+And the user can still be unable to complete their work.
+
+That is why I value **ownership** more than simply completing assigned tasks.
+
+I wrote about the same distinction when revisiting my MSc research in [The Technology Was Never the Hardest Part](/articles/the-technology-was-never-the-hardest-part) — the difference between "my task is finished" and "the problem is solved." Building teams is where that distinction stops being theory.
+
+Ownership doesn't mean one person has to solve everything.
+
+It means caring about what happens to the thing you built after it leaves your hands.
+
+If something doesn't work, help understand why.
+
+If another developer is blocked by your implementation, help them.
+
+If a requirement doesn't make sense, question it before spending three days implementing it.
+
+If you notice a problem outside the exact boundaries of your ticket, don't simply walk past it because it belongs to somebody else.
+
+<Pull>
+    A strong team doesn't consist of people protecting their individual
+    responsibilities. It consists of people protecting the outcome.
+</Pull>
+
+## Commitment Doesn't Mean Working All Night
+
+Commitment in software development is sometimes confused with hours.
+
+Who stayed latest?
+
+Who worked over the weekend?
+
+Who responded at 2 AM?
+
+I don't think those are good measures of commitment.
+
+In fact, if they become normal, they often indicate something else is wrong.
+
+To me, commitment is much simpler.
+
+**If you say you are going to deliver something, you take responsibility for delivering it properly.**
+
+And if you cannot, you communicate early.
+
+Problems happen.
+
+Estimates are wrong.
+
+Technical complications appear.
+
+Requirements change.
+
+People get stuck.
+
+What damages a team isn't usually the existence of those problems.
+
+It is discovering them at the last possible moment.
+
+A committed developer doesn't hide a problem until the deadline.
+
+They raise their hand while there is still time for the team to do something about it.
+
+## Good Teams Need to Be Flexible
+
+Software projects rarely finish exactly as they were imagined at the beginning.
+
+That is not necessarily because requirements were poorly written.
+
+Sometimes you simply learn things by building.
+
+A workflow that made perfect sense on paper feels awkward once people start using it.
+
+A technical approach that looked straightforward becomes complicated once it meets real data.
+
+A feature everyone considered important turns out not to matter very much.
+
+Something nobody considered important becomes essential.
+
+Good engineering requires structure.
+
+But structure should not become rigidity.
+
+There is a difference between protecting good engineering practices and protecting a decision simply because **we already made it**.
+
+Strong teams can change direction without turning every change into chaos.
+
+They understand which parts of the system should remain stable and which parts need room to evolve.
+
+That balance takes experience.
+
+## Testing Is Not Someone Else's Job
+
+Another mindset I have tried hard to build into teams is that testing does not begin when development ends.
+
+Having dedicated testers is extremely valuable.
+
+But a tester should not be the first person who discovers that the basic workflow doesn't work.
+
+Developers need to test what they build.
+
+Not just:
+
+> Does my function return the correct value?
+
+But:
+
+> Can somebody actually use this?
+
+Try the workflow.
+
+Enter bad data.
+
+Refresh the page halfway through.
+
+Go backwards.
+
+Open it on a different screen size.
+
+Try something the user probably shouldn't do.
+
+Use realistic data instead of the same three records you've been testing with for two weeks.
+
+Ask what happens when something fails.
+
+The purpose of testing isn't merely to prove that software works.
+
+It is to **find the ways in which it doesn't**.
+
+That requires curiosity.
+
+And I have found that the best testers — and the best developers — share that trait.
+
+They don't simply confirm the expected path.
+
+They try to break assumptions.
+
+## Building the Mindset
+
+You cannot create this kind of team with a coding standard document.
+
+You cannot put "ownership" into a checklist.
+
+You cannot install a tool that makes developers care about the user's experience.
+
+Culture develops through repetition.
+
+It develops through code reviews where people ask *why*, not only whether the syntax is correct.
+
+It develops when developers are included in conversations about the business problem instead of receiving isolated tasks.
+
+It develops when testers and developers work together rather than behaving like opposing teams.
+
+It develops when mistakes become opportunities to improve the system rather than opportunities to find someone to blame.
+
+And, sometimes, it develops because somebody keeps asking annoying questions.
+
+Which brings me back to being **the police**.
+
+Maybe there was some truth to the nickname.
+
+I do care about standards.
+
+I care about testing.
+
+I care about consistency.
+
+I care about developers following through on what they commit to.
+
+But after all these years, I don't think I was ever really trying to police the code.
+
+I was trying to build teams that cared about **what happened after the code was written**.
+
+Because frameworks change.
+
+Languages change.
+
+Architectures change.
+
+The tools we consider best practice today will eventually be replaced by something else.
+
+But the fundamental responsibility of a software team hasn't changed very much.
+
+There is somebody on the other side of what we build who has a problem to solve.
+
+Our job is to help them solve it.
+
+Everything else — the stack, the architecture, the process, the tickets and, yes, even the syntax — is there to help us do that.
+
+And when a team truly understands that, you don't need to police nearly as much.
