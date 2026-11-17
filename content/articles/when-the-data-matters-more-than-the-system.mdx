@@ -1,0 +1,392 @@
+---
+title: "When the Data Matters More Than the System"
+description: "Lessons in privacy, protection, and responsible system design."
+category: architecture
+date: 2026-08-19
+featured: true
+cover: /images/covers/when-the-data-matters-more-than-the-system.aaed31c8.webp
+coverAlt: "A diagram titled Data Protection & Privacy — designing systems that handle sensitive information responsibly. On the left, a Sensitive Data panel lists four industries: credit reporting, insurance, financial services and utility billing. A dashed arrow leads to a central shield with a padlock, ringed by four circles: people data, financial data, identity data and usage data. Another arrow leads to The Outcome — a trusted and compliant system — shown as a laptop with a checklist and three ticks: private by design, secure by design, built for trust. Below, five key principles in sequence: Minimise, collect and keep only what you need; Control, give the right access to the right people; Protect, secure the data at rest, in transit and in use; Isolate, keep clear boundaries between systems and data; Manage, retain, monitor and handle the data responsibly. A footer reads Privacy by Design · Security by Design."
+tags:
+  - Data Privacy
+  - Security by Design
+  - Privacy by Design
+  - Enterprise Architecture
+  - Data Protection
+---
+
+Over the years, I've had the opportunity to work on systems across different industries, including credit reporting, insurance, financial services, and enterprise management platforms.
+
+Each came with its own challenges. Different business rules, different workflows, different integrations, and different expectations.
+
+But there was one responsibility they all shared: **the information these systems handled belonged to real people and organisations, and protecting it mattered just as much as processing it correctly.**
+
+A credit reporting platform may hold information that influences someone's ability to obtain financing. An insurance system may process personal details, claims, and financial records. A utility billing platform may manage tenant information, consumption records, account balances, and payment histories.
+
+The nature of the information differs, but the responsibility remains the same.
+
+And after working on systems like these, I've come to believe that data protection should never be treated as just another technical requirement.
+
+It should be one of the principles around which the entire system is designed.
+
+## Security Is Not a Feature You Add Later
+
+One of the mistakes we can make in software development is treating security as something to address towards the end of a project.
+
+We design the database, build the APIs, develop the interfaces, connect the services, and then begin asking questions about encryption, access restrictions, and data protection.
+
+By then, many of the important architectural decisions have already been made.
+
+Where the data is stored. How it moves between services. Which systems can access it. How much information an API returns. What gets recorded in logs. Who has access to production environments.
+
+These decisions are not always easy to reverse.
+
+My preference has always been to bring these questions into the design discussions as early as possible.
+
+Before deciding how information will be processed, we should understand what information we're handling, why we need it, and who should be allowed to access it.
+
+That understanding should influence everything that follows.
+
+**A secure system is not simply one that prevents unauthorised access. It is one that has been deliberately designed to minimise unnecessary exposure in the first place.**
+
+## Privacy by Design and Security by Design
+
+Although the two are closely related, I think it's important to distinguish between privacy and security.
+
+Security is concerned with protecting information from unauthorised access, modification, disclosure, or destruction.
+
+Privacy goes a little further.
+
+It asks whether the information should have been collected, processed, retained, or shared in the first place.
+
+Consider a financial application that stores customer information in an encrypted database, uses secure communication protocols, and enforces strict authentication.
+
+From a security perspective, those are important measures.
+
+But what if the application collects more personal information than it actually needs?
+
+What if it retains information indefinitely without a legitimate reason?
+
+Or shares complete customer records with another service when only a reference number is required?
+
+The information may be technically secure, but the design could still introduce unnecessary privacy risks.
+
+This is why I believe **Privacy by Design and Security by Design should work together from the very beginning.**
+
+Security asks how we protect the information.
+
+Privacy asks why we need it and how responsibly we use it.
+
+Neither should be an afterthought.
+
+## Collect What You Need, Not Everything You Can
+
+Modern applications make collecting information relatively easy.
+
+We can add more fields to a form, store additional attributes in a database, or retain complete responses from external services because they might be useful someday.
+
+But just because we can collect something doesn't mean we should.
+
+Consider a credit reporting application.
+
+A particular workflow may require an identification number, a credit score, or specific financial information. That doesn't automatically mean every component of the application needs access to the entire customer profile.
+
+The same applies to insurance and billing platforms.
+
+A utility billing service may need a customer's account reference and billing details. It may not need access to unrelated personal information maintained elsewhere in the organisation.
+
+The principle is straightforward:
+
+**If the system doesn't need the information to perform its intended function, question why it is being collected, stored, or shared.**
+
+This is commonly referred to as *data minimisation*.
+
+It reduces the amount of sensitive information we are responsible for protecting. It also makes systems easier to maintain, audit, and eventually retire.
+
+Another important question is how long the information should remain in the system.
+
+Not every record needs to be retained indefinitely. Retention should follow legitimate business needs and applicable legal or regulatory requirements, with appropriate deletion or anonymisation when the information is no longer required.
+
+Sometimes the safest information is the information we never collected or no longer need to retain.
+
+## Access Should Be Based on Responsibility, Not Convenience
+
+In enterprise applications, access control can become complicated.
+
+Different departments need different information. Administrators need to manage the platform. Support teams need to investigate issues. External services may need limited access to perform specific functions.
+
+The temptation is to simplify these requirements by creating broad permissions.
+
+But convenience can easily become a security risk.
+
+I've always considered access control to be more than simply deciding whether a user can log in.
+
+Authentication tells us who someone is.
+
+Authorisation determines what they are allowed to do.
+
+And in systems handling sensitive information, that distinction is extremely important.
+
+For example, an employee working with insurance claims may need to view the claims assigned to their team. That doesn't necessarily mean they should have access to every policyholder's information.
+
+Similarly, someone responsible for generating utility bills may need access to meter readings, tariffs, and billing records without needing administrative access to the entire platform.
+
+This is where the principle of **least privilege** becomes essential.
+
+Every user, service, and integration should receive only the access required to perform its responsibilities.
+
+That principle should extend beyond application users.
+
+It applies to database accounts, API credentials, background services, developers, administrators, and third-party integrations.
+
+Permissions should also be reviewed as responsibilities change.
+
+Access that was appropriate six months ago may no longer be necessary today.
+
+## Protect the Data Throughout Its Journey
+
+When discussing data security, encryption is usually one of the first things that comes up.
+
+And rightly so.
+
+But protecting information involves more than encrypting a database.
+
+Data moves.
+
+It travels from browsers to APIs, between internal services, through message queues, into reporting systems, and sometimes to external platforms.
+
+Every movement introduces another point where information could potentially be exposed.
+
+In a financial application, a request might pass through several services before a transaction is completed. In a credit reporting system, information may be retrieved from external providers, processed internally, and presented through a customer-facing portal.
+
+Each part of that journey deserves consideration.
+
+Some fundamental practices should be standard:
+
+- Encrypt sensitive information in transit using appropriate, modern transport security.
+- Protect stored data through encryption and sound key management.
+- Avoid placing personal information in URLs, application logs, or error messages.
+- Use secure authentication and service-to-service authorisation.
+- Keep credentials and encryption keys outside application source code.
+- Ensure backups and exported reports receive protection appropriate to the information they contain.
+
+Encryption is important, but it doesn't solve everything.
+
+An application can use strong encryption and still expose sensitive information through an overly permissive API or an incorrectly configured reporting function.
+
+Which brings us back to architecture.
+
+We need to consider not only how information is protected, but also where it can travel and under what circumstances it can be accessed.
+
+## APIs Should Never Return More Than They Need To
+
+One area I believe deserves particular attention is API design.
+
+An API may be perfectly functional, well documented, and adequately protected by authentication, yet still expose unnecessary information.
+
+Imagine an endpoint that retrieves a customer's billing details.
+
+The interface may only need the account number, billing period, amount due, and payment status.
+
+But the underlying database record might contain significantly more information.
+
+Returning the complete record and relying on the frontend to hide unnecessary fields is not a good approach.
+
+The information has already left the backend.
+
+A better design is to return only the fields required for that specific operation, with authorisation enforced on the server.
+
+This becomes especially important when systems integrate with external providers or expose APIs to third parties.
+
+We should ask:
+
+*Does this service genuinely need access to this information?*
+
+*Is the requesting user or system authorised to access this particular record?*
+
+*Could the same business requirement be achieved by returning less information?*
+
+These are small questions that can prevent significant problems.
+
+## Logs Are Useful, but They Can Become a Liability
+
+Logging is essential when building and maintaining enterprise applications.
+
+Without adequate logs, investigating production issues can become extremely difficult.
+
+But there is a balance to maintain.
+
+During development, it's convenient to log complete requests, responses, or database objects to understand what is happening.
+
+In systems handling financial and personal information, that convenience can introduce another security concern.
+
+Application logs can unintentionally become secondary repositories of sensitive data.
+
+Identification numbers, personal details, access tokens, financial records, and even passwords can end up in places where they were never intended to be stored.
+
+And logs are often accessible to a wider group of technical personnel than the underlying business data.
+
+A better approach is to design logging around what is actually needed for troubleshooting and accountability.
+
+Use transaction references, correlation IDs, event types, timestamps, and carefully selected operational details.
+
+Mask or exclude sensitive fields.
+
+Restrict access to logs and establish appropriate retention periods.
+
+Most importantly, distinguish between operational logging and audit logging.
+
+Operational logs help us understand whether a system is working.
+
+Audit logs help establish who performed an action, what changed, and when it happened.
+
+Both are important, but they serve different purposes and should be designed accordingly.
+
+## Privacy Should Influence the Architecture
+
+As systems grow, architecture becomes increasingly important.
+
+A platform may begin as a relatively simple application and eventually expand into multiple modules, services, integrations, and reporting components.
+
+This is particularly common in enterprise systems.
+
+A utility management platform might eventually integrate with facility management, procurement, accounting, and payment services.
+
+A financial platform might connect to identity verification, credit information providers, payment gateways, and external reporting systems.
+
+The challenge is ensuring that growth doesn't result in every component having unrestricted access to everything.
+
+Separating systems into services doesn't automatically make them secure.
+
+Neither does keeping everything within a monolithic application automatically make it insecure.
+
+What matters is how responsibilities and trust boundaries are defined.
+
+Each component should have a clear purpose, controlled access to information, and well-defined communication with other components.
+
+Where practical, sensitive data should remain within the service or domain responsible for managing it.
+
+Other components should access that information through controlled interfaces rather than directly querying unrelated databases.
+
+This reduces unnecessary dependencies and helps contain the impact if one component is compromised.
+
+It also encourages us to think carefully about which information genuinely needs to be shared.
+
+**Good architecture isn't just about making systems scalable or maintainable. It's also about limiting how far a problem can spread.**
+
+## Development and Testing Deserve the Same Attention
+
+Production environments usually receive the most attention when discussing security.
+
+But sensitive information can also be exposed during development, testing, and support activities.
+
+One practice that deserves particular scrutiny is copying production data into non-production environments.
+
+Real customer information may make testing easier, but it can introduce significant privacy risks if those environments have weaker controls.
+
+Whenever possible, development and testing should use synthetic data or appropriately anonymised datasets.
+
+Where production-derived information is genuinely necessary, access should be justified, controlled, and protected.
+
+The same thinking applies to database exports, support attachments, temporary files, and screenshots shared during troubleshooting.
+
+We should also ensure that security testing is part of the development process rather than a final activity before deployment.
+
+Dependency scanning, code reviews, automated security checks, API authorisation tests, and periodic security assessments all contribute to reducing risk.
+
+None of these practices guarantees that a system will be free from vulnerabilities.
+
+But together, they make security an ongoing engineering responsibility rather than a one-time exercise.
+
+## Compliance Is the Baseline, Not the Destination
+
+Working with financial, insurance, and credit-related systems often means dealing with regulatory requirements and industry expectations.
+
+In Malaysia, for example, personal data protection obligations, sector-specific requirements, and contractual responsibilities can influence how systems are designed and operated.
+
+These requirements matter, and they need to be understood early in a project.
+
+But I don't believe compliance alone should define our approach to protecting information.
+
+A system can satisfy a documented checklist and still contain unnecessary risks.
+
+Compliance tells us what we are required to do.
+
+Good engineering should also ask what we ought to do.
+
+Can we reduce the amount of information exposed?
+
+Can we make access more restrictive without affecting legitimate workflows?
+
+Can we improve how sensitive information is handled during troubleshooting?
+
+Can we make suspicious activity easier to detect?
+
+Can we recover safely when something goes wrong?
+
+These questions should continue long after a compliance assessment has been completed.
+
+Regulations and standards provide an important foundation. They should not become the ceiling for responsible system design.
+
+## Design for the Possibility That Something Will Go Wrong
+
+No matter how carefully we design a system, we should never assume that it is completely immune to failure or compromise.
+
+Credentials can be exposed.
+
+Software dependencies can contain vulnerabilities.
+
+Permissions can be misconfigured.
+
+People can make mistakes.
+
+A responsible architecture should account for these possibilities.
+
+That means limiting the impact of a compromised account or service, maintaining reliable backups, monitoring unusual activity, and establishing procedures for investigating and responding to incidents.
+
+It also means ensuring that audit information is sufficiently reliable to support investigations without unnecessarily exposing additional personal data.
+
+Security isn't only about preventing incidents.
+
+It is also about detecting them, containing their impact, recovering appropriately, and learning from what happened.
+
+The ability to respond matters just as much as the ability to defend.
+
+## The Principle I Keep Coming Back To
+
+After working with systems that handle sensitive information, one principle continues to shape how I think about architecture:
+
+**Every piece of personal information we handle creates a responsibility, and every unnecessary copy, permission, or exposure increases that responsibility.**
+
+That principle influences many decisions.
+
+It encourages us to collect less information, restrict access, design smaller trust boundaries, protect data throughout its lifecycle, and question whether a particular integration genuinely needs the information it requests.
+
+It also changes how we define a successful system.
+
+A successful credit reporting platform isn't simply one that retrieves and presents accurate credit information.
+
+A successful insurance application isn't simply one that processes claims efficiently.
+
+And a successful utility billing platform isn't simply one that generates accurate invoices.
+
+Those are essential business outcomes.
+
+But we also need to ensure that the systems achieve those outcomes without unnecessarily compromising the privacy and security of the people whose information they handle.
+
+## Final Thoughts
+
+As software engineers and architects, we spend a great deal of time thinking about performance, scalability, reliability, and maintainability.
+
+Data protection deserves the same level of attention.
+
+Not because every application is subject to the same regulations, or because every project needs an elaborate security architecture.
+
+But because the decisions we make during design determine how information will be handled for years to come.
+
+The database structures we create, the APIs we expose, the permissions we assign, and the integrations we introduce all have consequences beyond the immediate functionality we're delivering.
+
+And in systems dealing with personal and financial information, those consequences can affect real people.
+
+For me, that's what makes privacy and data protection an architectural responsibility rather than simply a security requirement.
+
+**The goal isn't just to build a system that works. It's to build one that deserves to be trusted.**
