@@ -7,6 +7,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode, { type Options as PrettyCodeOptions } from "rehype-pretty-code";
 
 import { cn } from "@/lib/utils";
+import { diagrams, type DiagramName } from "@/components/diagrams";
 
 const prettyCodeOptions: PrettyCodeOptions = {
     // The code surface is dark in both site themes — it's the machine's voice
@@ -119,6 +120,29 @@ function Figure({
     );
 }
 
+/**
+ * A theme-aware inline SVG diagram from src/components/diagrams.tsx. An
+ * unknown name throws, so a typo fails the build instead of rendering nothing.
+ */
+function Diagram({ name, caption }: { name: string; caption?: string }) {
+    if (!Object.hasOwn(diagrams, name)) {
+        throw new Error(
+            `<Diagram name="${name}">: no such diagram. Add it to src/components/diagrams.tsx.`,
+        );
+    }
+    const Drawing = diagrams[name as DiagramName];
+    return (
+        <figure className="my-9 rounded-lg border border-hairline bg-paper px-5 py-8 sm:px-8">
+            <Drawing />
+            {caption ? (
+                <figcaption className="mx-auto mt-6 max-w-[26rem] border-l border-hairline pl-3 font-mono text-[0.6875rem] leading-relaxed text-faint">
+                    {caption}
+                </figcaption>
+            ) : null}
+        </figure>
+    );
+}
+
 const components = {
     a: ({ href = "", ...props }: React.ComponentProps<"a">) => {
         const isInternal = href.startsWith("/") || href.startsWith("#");
@@ -142,6 +166,7 @@ const components = {
     Tradeoffs,
     Side,
     Figure,
+    Diagram,
 };
 
 export async function MDXBody({

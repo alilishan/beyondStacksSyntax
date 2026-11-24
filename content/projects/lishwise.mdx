@@ -1,0 +1,113 @@
+---
+title: "Lishwise"
+description: "An AI-powered personal financial assistant that integrates Telegram, OpenAI and Dropbox to simplify expense recording, financial queries, receipt management and multi-currency financial tracking through natural language."
+category: "AI & Personal Finance"
+type: "Personal Project"
+status: "Operational — Private Deployment"
+sortOrder: 4
+# The overview is public; the application is not. Never add a link to the
+# deployment, and keep financial records, credentials and infrastructure
+# details off this page.
+overviewLabel: "Explore project"
+tags:
+  - Agentic AI
+  - OpenAI
+  - Telegram
+  - Personal Finance
+  - Automation
+  - Systems Architecture
+technologies:
+  - Telegram
+  - OpenAI
+  - Dropbox
+relatedArticles: []
+---
+
+## The motivation
+
+Managing personal finances across multiple accounts, currencies, recurring expenses and financial commitments can become unnecessarily complicated.
+
+Traditional financial management applications often require users to navigate multiple screens, manually categorise transactions and repeatedly enter structured information.
+
+I wanted to explore whether everyday financial management could become more conversational without compromising the accuracy and integrity of the underlying financial records.
+
+This led to the development of Lishwise, a privately deployed financial assistant that I use for my own personal financial management.
+
+## The approach
+
+Lishwise uses Telegram as a conversational interface, allowing financial information to be recorded and retrieved using everyday natural language.
+
+OpenAI models interpret the user's intent and translate natural language into structured, machine-readable instructions that the application can validate and execute against its financial data.
+
+Rather than allowing the AI model to directly manipulate financial records or act as the authoritative source of financial calculations, the system uses controlled application operations and deterministic business rules.
+
+Dropbox is integrated as a document storage mechanism for receipts, providing a centralised location for retaining supporting financial documents.
+
+## Example interactions
+
+The system is designed to support natural language interactions such as:
+
+- I spent RM 85 on groceries today.
+- Record RM 150 for fuel.
+- What is my current account balance?
+- How much have I spent this month?
+- What payments are due this month?
+- How much have I spent on food?
+- Record a credit card payment.
+- Show my outstanding financial commitments.
+
+These are interpreted into structured operations rather than relying on the language model to calculate or invent financial information.
+
+## Core integrations
+
+<Diagram name="lishwise-architecture" />
+
+### Telegram
+
+Provides a convenient conversational interface for recording expenditure, retrieving balances and interacting with financial information.
+
+### OpenAI
+
+Interprets natural language, identifies user intent and converts requests into structured instructions for application-level processing.
+
+### Dropbox
+
+Provides centralised storage for receipts and supporting financial documents.
+
+### Financial application layer
+
+Handles validation, transaction processing, financial calculations, business rules and controlled data access.
+
+### Database
+
+Maintains structured financial records as the authoritative source of financial information.
+
+## Key engineering areas
+
+- Natural language intent recognition.
+- AI-assisted structured instruction generation.
+- Agentic AI architecture.
+- Telegram bot integration.
+- Dropbox integration.
+- Receipt and document management.
+- Multi-currency financial management.
+- Financial transaction processing.
+- Deterministic business rules.
+- Financial data integrity.
+- AI model evaluation.
+- Application security and privacy.
+- Self-hosted application deployment.
+
+## Engineering philosophy
+
+AI should make financial systems easier to interact with, not make them less predictable.
+
+Lishwise deliberately separates natural language interpretation from financial execution. The AI understands what the user wants to do, while the application remains responsible for validating instructions, enforcing business rules and maintaining accurate financial records.
+
+The project explores how probabilistic AI models can work alongside deterministic software systems in a domain where accuracy, consistency and accountability are essential.
+
+## Deployment status
+
+Lishwise is deployed and operational for personal use.
+
+It is not currently offered as a publicly accessible financial management service.

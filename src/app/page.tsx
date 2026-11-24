@@ -10,9 +10,11 @@ import {
     getLatestArticles,
     getSeriesCounts,
 } from "@/lib/articles";
+import { getFeaturedProjects } from "@/lib/projects";
 import { Button } from "@/components/ui/button";
 import { GutterLabel, RuledHeading } from "@/components/gutter";
 import { ArticleCard, ArticleRow } from "@/components/article-card";
+import { ProjectCardCompact } from "@/components/project-card";
 
 export default function HomePage() {
     const featured = getFeaturedArticles(3);
@@ -20,6 +22,7 @@ export default function HomePage() {
     const categoryCounts = getCategoryCounts();
     const seriesCounts = getSeriesCounts();
     const hasArticles = latest.length > 0;
+    const projects = getFeaturedProjects(3);
 
     return (
         <>
@@ -127,6 +130,39 @@ export default function HomePage() {
                         </p>
                     )}
                 </section>
+
+                {projects.length > 0 ? (
+                    <section className="pt-20" aria-labelledby="projects-heading">
+                        <RuledHeading
+                            label="Projects"
+                            action={
+                                <Link
+                                    href="/projects"
+                                    className="font-mono text-[0.6875rem] text-muted-foreground transition-colors hover:text-accent-ink"
+                                >
+                                    View all projects →
+                                </Link>
+                            }
+                        />
+                        <div className="mt-8 flex flex-col gap-x-10 gap-y-2 md:flex-row md:items-baseline">
+                            <h2
+                                id="projects-heading"
+                                className="shrink-0 font-mono text-base font-bold tracking-tight text-ink"
+                            >
+                                Beyond the theory.
+                            </h2>
+                            <p className="max-w-[60ch] font-reading text-[0.9375rem] leading-relaxed text-muted-foreground">
+                                Putting ideas into practice through personal projects, engineering
+                                experiments and practical solutions.
+                            </p>
+                        </div>
+                        <div className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                            {projects.map((project) => (
+                                <ProjectCardCompact key={project.slug} project={project} />
+                            ))}
+                        </div>
+                    </section>
+                ) : null}
 
                 <section className="pt-20" aria-labelledby="series-heading">
                     <RuledHeading label="Series" />

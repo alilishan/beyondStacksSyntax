@@ -1,0 +1,49 @@
+---
+title: "Audio Lesson Studio"
+description: "A self-hosted text-to-speech platform built to turn learning material into audio lessons, making continuous learning part of my daily commute."
+category: "AI & Infrastructure"
+type: "Personal Project"
+status: "Operational"
+sortOrder: 1
+featured: true
+tags:
+  - AI Integration
+  - Distributed Systems
+  - Self-hosted
+  - Infrastructure
+# From the public engineering showcase.
+technologies:
+  - Next.js 16
+  - SQLite
+  - Kokoro (ONNX Runtime)
+  - FFmpeg
+  - Docker Compose
+  - nginx
+showcase: "https://alilishan.github.io/kokoro-audio/"
+highlights:
+  - value: "9.4×"
+    label: "Faster generation using the local Mac worker compared with the tested VPS."
+  - value: "2 GB"
+    label: "RAM on the cloud server."
+  - value: "24 / 24"
+    label: "Production validation checks passed."
+  - value: "Automatic"
+    label: "Processing failover between workers."
+relatedArticles: []
+---
+
+## Overview
+
+The project originated from a personal desire to make better use of time spent driving. Rather than relying entirely on commercially available audiobooks or subscription-based text-to-speech services, I wanted to build a system capable of converting my own learning material into audio.
+
+What started as a simple text-to-speech experiment evolved into a distributed processing architecture, combining a resource-constrained cloud server with a local Mac worker, automatic failover and resumable audio generation.
+
+## Key engineering areas
+
+- Distributed workload processing.
+- Resource-constrained infrastructure.
+- AI model integration.
+- Automatic worker failover.
+- Job scheduling and recovery.
+- Self-hosted services.
+- Performance optimisation.
